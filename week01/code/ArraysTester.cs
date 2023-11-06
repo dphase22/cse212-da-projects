@@ -75,7 +75,7 @@ public static class ArraysTester {
         // create a list for the rotate
         List<int> rotate = new List<int>(data.Count);
 
-        // add the element after the rotation into the List rotate and then the new one
+        // add the element after the rotation into the List rotate and then the new one, using AddRange and GetRange
         rotate.AddRange(data.GetRange(data.Count - rotateAmount, rotateAmount));
         rotate.AddRange(data.GetRange(0, data.Count - rotateAmount));
 
