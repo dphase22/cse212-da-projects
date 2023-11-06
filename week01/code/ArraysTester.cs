@@ -39,7 +39,19 @@ public static class ArraysTester {
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return new double[0]; // replace this return statement with your own
+        // there are a double and int as parameters
+        // create an array for multiples
+        double[] mult = new double[length];
+
+        // With a for bucle interate the length for the multiples
+        for (int i =0; i < length; i++)
+        {
+            // set the operation of multiples by the length
+            mult[i] = number * (i + 1);
+        }
+
+        //return the result
+        return mult; // replace this return statement with your own
     }
     
     /// <summary>
@@ -56,6 +68,19 @@ public static class ArraysTester {
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        // there are a List<int> and int
+        // first calculate the rotate amount is the correct amount
+        int rotateAmount = amount % data.Count;
 
+        // create a list for the rotate
+        List<int> rotate = new List<int>(data.Count);
+
+        // add the element after the rotation into the List rotate and then the new one
+        rotate.AddRange(data.GetRange(data.Count - rotateAmount, rotateAmount));
+        rotate.AddRange(data.GetRange(0, data.Count - rotateAmount));
+
+        // in the list of data change it with the rotate List
+        data.Clear();
+        data.AddRange(rotate);
     }
 }
