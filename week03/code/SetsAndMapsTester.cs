@@ -111,6 +111,17 @@ public static class SetsAndMapsTester {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+        HashSet<string> wordSet = new HashSet<string>();
+
+        foreach (string word in words) {
+        string pair = new string(word.Reverse().ToArray());
+
+            if (wordSet.Contains(pair)) {
+                Console.WriteLine($"{word} & {pair}");
+            } else {
+                wordSet.Add(word);
+            }
+        }
     }
 
     /// <summary>
@@ -132,6 +143,17 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+            if (fields.Length < 4) {
+                continue; // The follow line get a Exception has occurred: string degree = fields[3];
+                          // CLR/System.IndexOutOfRangeException so to solve this skip this line as it doesn't have enough fields
+            }
+            string degree = fields[3];
+
+            if (degrees.ContainsKey(degree)) {
+                degrees[degree]++;
+            } else {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
@@ -158,7 +180,32 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
+
+        if (word1.Length != word2.Length) {
+            return false;
+        }
+
+        var letterCounts = new Dictionary<char, int>();
+
+        for (int i = 0; i < word1.Length; i++) {
+            char letter = word1[i];
+            if (letterCounts.ContainsKey(letter)) {
+                letterCounts[letter]++;
+            } else {
+                letterCounts[letter] = 1;
+            }
+        }   
+
+        for (int i = 0; i < word2.Length; i++) {
+            char letter = word2[i];
+            if (!letterCounts.ContainsKey(letter) || --letterCounts[letter] < 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -232,5 +279,8 @@ public static class SetsAndMapsTester {
         var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
         // 1. Add your code to map the json to the feature collection object
         // 2. Print out each place a earthquake has happened today
+        foreach (var feature in featureCollection.Features) {
+            Console.WriteLine($"Lacation: {feature.Properties.Place} - Mag {feature.Properties.Mag}");
+        }
     }
 }
